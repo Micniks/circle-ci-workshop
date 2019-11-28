@@ -8,22 +8,19 @@ jobs:
       - run:
           name: The First Step
           command: |
-            gradle test
-      - run:
-          name: The Second Step
-          command: |
-            gradle jar  
+            gradle test 
       - store_test_results:
           path: build/test-results
+      - persist_to_workspace:
+          root: .
+          paths: 
+            - .
   package:
     docker:
       - image: circleci/openjdk:8-jdk
     steps:
-      - checkout
-      - run:
-          name: The First Step
-          command: |
-            gradle test
+      - attach_workspace:
+          at: .
       - run:
           name: The Second Step
           command: |
